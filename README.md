@@ -3,7 +3,7 @@
 
 Code associated with ["Robustness of Autoencoders for Anomaly Detection Under Adversarial Impact"](https://www.ijcai.org/Proceedings/2020/0173.pdf) (IJCAI2020)
 
-main.py
+main.py \
 attack.py - adversarial attacks\
 defend.py - defenses against attacks\
 model.py - Autoencoder model and training \
