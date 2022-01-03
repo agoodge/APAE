@@ -39,6 +39,7 @@ def main(args):
         _, test_rec = net(test_x.to(var.device))
         test_losses = loss_fn(test_x, test_rec.cpu()).mean(1)
         original_auc = roc_auc_score(test_y, test_losses.cpu())
+        print('Original AUC Score: %.4f' %original_auc)
 
     # ATTACKS
     print('Attacking model...')
@@ -51,7 +52,8 @@ def main(args):
         test_featurewise_losses = loss_fn(att_x, att_rec.cpu())
         test_losses = test_featurewise_losses.mean(1)
         attacked_auc = roc_auc_score(test_y, test_losses.cpu())
-    
+        print('Attacked AUC Score: %.4f' %attacked_auc)
+
     # DEFENSES
     print('Defending model...')
 
@@ -79,8 +81,7 @@ def main(args):
     # defended score
     with torch.no_grad():
         defended_auc = roc_auc_score(test_y, test_losses.cpu())
-
-    print("Scores: \t Original: %.4f \t Attacked %.4f \t Defended %.4f" %(original_auc,attacked_auc,defended_auc))
+        print('Defended AUC Score: %.4f' %defended_auc)
 
 if __name__ == "__main__":
     
@@ -89,7 +90,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default = 'WADI')
-    parser.add_argument("--attack_type", type = str, default = 'Random', help = 'Type of adversarial attack')
+    parser.add_argument("--attack_type", type = str, default = 'L2', help = 'Type of adversarial attack')
     parser.add_argument("--train_model", action="store_true", help = 'Train a new model vs. load existing model')
     args = parser.parse_args()
 

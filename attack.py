@@ -35,13 +35,16 @@ def random_attack(model, x, y, num_vectors = 1000):
     return adv_attack_x
 
 # L2 attack with perturbation budget
-def L2_attack(model,attack_x,attack_y, budget=20):
+def L2_attack(model,attack_x,attack_y, budget=50):
 
     losses = []
+    #huber
     loss_fn = nn.SmoothL1Loss(reduction = "sum")
+    # L2
+    loss_fn = nn.MSELoss(reduction = "sum")
     adv_attack_x = attack_x.clone().detach().requires_grad_(True)
     anom_idx = np.argwhere(attack_y==1)
-    change = torch.sum(torch.abs(adv_attack_x[anom_idx] - attack_x[anom_idx]))*100/torch.sum(np.abs(attack_x[anom_idx])).item()
+    change = torch.sum(torch.abs(adv_attack_x[anom_idx] - attack_x[anom_idx]))*100/torch.sum(torch.abs(attack_x[anom_idx])).item()
     
     while change <= budget:
         #into model
@@ -54,12 +57,11 @@ def L2_attack(model,attack_x,attack_y, budget=20):
         # gradient descent on data to reduce loss fn
         adv_attack_x.data -= var.alpha*adv_attack_x.grad
         #log perturbation size made
-        change = torch.sum(torch.abs(adv_attack_x[anom_idx] - attack_x[anom_idx]))*100/torch.sum(np.abs(attack_x[anom_idx])).item()
-    print("Perturbation size %.4f percent" % change)
+        change = torch.sum(torch.abs(adv_attack_x[anom_idx] - attack_x[anom_idx]))*100/torch.sum(torch.abs(attack_x[anom_idx])).item()
     return adv_attack_x
 
 # L0 attack with 
-def L0_attack(model,attack_x,attack_y, k=10, num_iter=300):
+def L0_attack(model,attack_x,attack_y, k=50, num_iter=300):
     
     losses = []
     loss_fn = nn.SmoothL1Loss(reduction = "sum")
