@@ -8,4 +8,4 @@ attack.py - adversarial attacks\
 defend.py - defenses against attacks\
 model.py - Autoencoder model and training \
 variables.py - hyperparameters \
-utils.py - useful functions \
+utils.py - useful functions
