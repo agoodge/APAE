@@ -1,5 +1,5 @@
 ## APAE
-#Adam Goodge, Bryan Hooi, See-Kiong Ng, Wee Siong Ng
+# Adam Goodge, Bryan Hooi, See-Kiong Ng, Wee Siong Ng
 
 Code associated with ["Robustness of Autoencoders for Anomaly Detection Under Adversarial Impact"](https://www.ijcai.org/Proceedings/2020/0173.pdf) (IJCAI2020)
 
