@@ -8,6 +8,7 @@ import variables as var
 # random attack: add random vectors to anomaly and keep those that reduce loss fn
 def random_attack(model, x, y, num_vectors = 1000):
 
+
     loss_fn = nn.SmoothL1Loss(reduction ='none')
     #only perturb anomalies
     anom_idx = np.argwhere(y==1)
